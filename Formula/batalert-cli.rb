@@ -9,6 +9,7 @@
 #   brew untap elkwaet/batalert
 
 class BatalertCli < Formula
+  include Language::Python::Virtualenv
   desc "CLI configuration tool for BatAlert — lightweight macOS battery monitor"
   homepage "https://gitlab.com/elkwaet/battery-alert-macos"
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/archive/v1.2.0/battery-alert-macos-v1.2.0.tar.gz"
