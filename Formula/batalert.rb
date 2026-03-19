@@ -10,12 +10,12 @@ class Batalert < Formula
 
   resource "rumps" do
     url "https://files.pythonhosted.org/packages/source/r/rumps/rumps-0.4.0.tar.gz"
-    sha256 "REPLACE_WITH_RUMPS_SHA256"
+    sha256 "17fb33c21b54b1e25db0d71d1d793dc19dc3c0b7d8c79dc6d833d0cffc8b1596"
   end
 
   resource "psutil" do
     url "https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz"
-    sha256 "REPLACE_WITH_PSUTIL_SHA256"
+    sha256 "6be126e3225486dff286a8fb9a06246a5253f4c7c53b475ea5f5ac934e64194c"
   end
 
   def install
