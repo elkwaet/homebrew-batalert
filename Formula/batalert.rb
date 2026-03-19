@@ -1,4 +1,6 @@
 class Batalert < Formula
+  include Language::Python::Virtualenv
+
   desc "Lightweight macOS battery monitor — CLI configuration tool"
   homepage "https://gitlab.com/elkwaet/battery-alert-macos"
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/archive/v1.2.0/battery-alert-macos-v1.2.0.tar.gz"
