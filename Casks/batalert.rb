@@ -53,6 +53,6 @@ cask "batalert" do
       -- or via Launchpad / Spotlight
 
     To also install the CLI configuration tool:
-      brew install elkwaet/batalert/batalert
+      brew install elkwaet/batalert/batalert-cli
   EOS
 end
