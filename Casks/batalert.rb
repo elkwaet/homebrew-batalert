@@ -9,7 +9,6 @@ cask "batalert" do
 
   depends_on formula: "python@3.12"
   depends_on formula: "librsvg"
-  depends_on macos: ">= :mojave"
 
   preflight do
     system_command "/usr/bin/pip3",
