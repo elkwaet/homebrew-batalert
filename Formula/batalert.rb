@@ -1,6 +1,4 @@
 class Batalert < Formula
-  include Language::Python::Virtualenv
-
   desc "Lightweight macOS battery monitor — CLI configuration tool"
   homepage "https://gitlab.com/elkwaet/battery-alert-macos"
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/archive/v1.2.0/battery-alert-macos-v1.2.0.tar.gz"
@@ -10,29 +8,30 @@ class Batalert < Formula
 
   depends_on "python@3.12"
 
-  resource "rumps" do
-    url "https://files.pythonhosted.org/packages/source/r/rumps/rumps-0.4.0.tar.gz"
-    sha256 "17fb33c21b54b1e25db0d71d1d793dc19dc3c0b7d8c79dc6d833d0cffc8b1596"
-  end
-
-  resource "psutil" do
-    url "https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz"
-    sha256 "6be126e3225486dff286a8fb9a06246a5253f4c7c53b475ea5f5ac934e64194c"
-  end
-
   def install
-    virtualenv_install_with_resources
-    bin.install "batalert.py" => "batalert"
-    inreplace bin/"batalert", %r{^#!/usr/bin/env python3},
-              "#!/usr/bin/env #{Formula["python@3.12"].opt_bin}/python3"
+    # Installer les dependances pip dans un venv isole
+    venv = libexec/"venv"
+    system Formula["python@3.12"].opt_bin/"python3.12", "-m", "venv", venv
+    system venv/"bin/pip", "install", "--quiet", "rumps", "psutil"
+
+    # Installer le script principal
+    (bin/"batalert").write <<~SH
+      #!/bin/bash
+      exec "#{venv}/bin/python" "#{libexec}/batalert.py" "$@"
+    SH
+
+    libexec.install "batalert.py"
   end
 
   def caveats
     <<~EOS
       BatAlert CLI installed. First-time setup:
         batalert --setup
+
       To launch the menu bar app:
         open /Applications/BatAlert.app
+      Or install the full app:
+        brew install --cask elkwaet/batalert/batalert
     EOS
   end
 
