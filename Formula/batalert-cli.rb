@@ -1,7 +1,7 @@
 # homebrew-batalert/Formula/batalert-cli.rb
 #
 # Installation :
-#   brew tap elkwaet/batalert https://gitlab.com/elkwaet/homebrew-batalert.git
+#   brew tap elkwaet/batalert https://github.com/elkwaet/homebrew-batalert.git
 #   brew install elkwaet/batalert/batalert-cli
 #
 # Désinstallation :
@@ -13,10 +13,13 @@ class BatalertCli < Formula
 
   desc "CLI configuration tool for BatAlert — lightweight macOS battery monitor"
   homepage "https://gitlab.com/elkwaet/battery-alert-macos"
-  url "https://gitlab.com/elkwaet/battery-alert-macos/-/archive/v1.2.0/battery-alert-macos-v1.2.0.tar.gz"
-  sha256 "1c5d2f7fbe0a61a644e8ff112d6362f6795eb62e14f9bb462ae380d44c9e34b3"
-  license "MIT"
+
+  # Pointe sur le zip statique uploadé comme asset de release GitLab
+  # SHA256 stable — ce fichier ne change jamais une fois uploadé
   version "1.3.0"
+  url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v1.3.0/downloads/BatAlert-1.3.0.zip"
+  sha256 "e1d6dec0d7334934a1c9797bf1f4266afd42aeebeae79a225bb353ce63eabae1"
+  license "MIT"
 
   depends_on "python@3.12"
 
@@ -31,24 +34,36 @@ class BatalertCli < Formula
   end
 
   def install
-    # Créer un venv isolé avec le Python Homebrew
+    # Le zip contient BatAlert.app — extraire batalert.py et i18n.py
+    # Le zip est structuré : BatAlert.app/Contents/Resources/...
+    # On cherche batalert.py et i18n.py dans le bundle
+    app_resources = Pathname.glob("BatAlert.app/Contents/Resources/lib/python*/").first
+
+    if app_resources
+      py_src = app_resources
+    else
+      # Fallback : chercher à la racine du zip
+      py_src = Pathname.pwd
+    end
+
+    # Créer un venv isolé
     python3 = Formula["python@3.12"].opt_bin/"python3.12"
     venv = libexec/"venv"
 
     system python3, "-m", "venv", "--without-pip", venv
-
-    # Bootstrapper pip dans le venv
     system venv/"bin/python3", "-m", "ensurepip"
     system venv/"bin/python3", "-m", "pip", "install", "--quiet",
            "--upgrade", "pip"
-
-    # Installer les dépendances dans le venv
     system venv/"bin/pip", "install", "--quiet", "rumps", "psutil"
 
-    # Installer batalert.py dans libexec
-    libexec.install "batalert.py", "i18n.py"
+    # Copier les scripts Python depuis le bundle
+    ["batalert.py", "i18n.py"].each do |f|
+      found = Pathname.glob("**/" + f).first
+      raise "#{f} not found in zip" unless found
+      libexec.install found => f
+    end
 
-    # Créer le wrapper shell qui utilise le venv Python
+    # Wrapper shell
     (bin/"batalert").write <<~SH
       #!/bin/bash
       exec "#{venv}/bin/python3" "#{libexec}/batalert.py" "$@"
