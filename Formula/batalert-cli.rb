@@ -27,7 +27,7 @@ class BatalertCli < Formula
 
   resource "psutil" do
     url "https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz"
-    sha256 "6be126e3225486dff286a8fb9a06246a5253f4c7c53b475ea5f5ac934e64194c"
+    sha256 "0746f5f8d406af344fd547f1c8daa5f5c33dbc293bb8d6a16d80b4bb88f59372"
   end
 
   def install
