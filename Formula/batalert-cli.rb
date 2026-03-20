@@ -1,15 +1,16 @@
-# homebrew-batalert/Formula/batalert.rb
+# homebrew-batalert/Formula/batalert-cli.rb
 #
 # Installation :
-#   brew tap elkwaet/batalert
-#   brew install elkwaet/batalert/batalert
+#   brew tap elkwaet/batalert https://gitlab.com/elkwaet/homebrew-batalert.git
+#   brew install elkwaet/batalert/batalert-cli
 #
 # Désinstallation :
-#   brew uninstall batalert
+#   brew uninstall batalert-cli
 #   brew untap elkwaet/batalert
 
 class BatalertCli < Formula
   include Language::Python::Virtualenv
+
   desc "CLI configuration tool for BatAlert — lightweight macOS battery monitor"
   homepage "https://gitlab.com/elkwaet/battery-alert-macos"
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/archive/v1.2.0/battery-alert-macos-v1.2.0.tar.gz"
@@ -17,10 +18,8 @@ class BatalertCli < Formula
   license "MIT"
   version "1.2.0"
 
-  # Python 3.12 est la version stable courante dans Homebrew
   depends_on "python@3.12"
 
-  # pip dependencies installées dans un virtualenv Homebrew
   resource "rumps" do
     url "https://files.pythonhosted.org/packages/source/r/rumps/rumps-0.4.0.tar.gz"
     sha256 "17fb33c21b54b1e25db0d71d1d793dc19dc3c0b7d8c79dc6d833d0cffc8b1596"
@@ -32,34 +31,47 @@ class BatalertCli < Formula
   end
 
   def install
-    # Installer les resources pip dans un virtualenv
-    virtualenv_install_with_resources
+    # Créer un venv isolé avec le Python Homebrew
+    python3 = Formula["python@3.12"].opt_bin/"python3.12"
+    venv = libexec/"venv"
 
-    # Installer le script principal comme commande
-    bin.install "batalert.py" => "batalert"
+    system python3, "-m", "venv", "--without-pip", venv
 
-    # S'assurer que le shebang pointe vers le bon Python
-    inreplace bin/"batalert", %r{^#!/usr/bin/env python3},
-              "#!/usr/bin/env #{Formula["python@3.12"].opt_bin}/python3"
+    # Bootstrapper pip dans le venv
+    system venv/"bin/python3", "-m", "ensurepip"
+    system venv/"bin/python3", "-m", "pip", "install", "--quiet",
+           "--upgrade", "pip"
+
+    # Installer les dépendances dans le venv
+    system venv/"bin/pip", "install", "--quiet", "rumps", "psutil"
+
+    # Installer batalert.py dans libexec
+    libexec.install "batalert.py"
+
+    # Créer le wrapper shell qui utilise le venv Python
+    (bin/"batalert").write <<~SH
+      #!/bin/bash
+      exec "#{venv}/bin/python3" "#{libexec}/batalert.py" "$@"
+    SH
+    chmod 0755, bin/"batalert"
   end
 
   def caveats
     <<~EOS
       BatAlert CLI is now installed.
 
-      To launch the menu bar app, install the cask :
+      To launch the menu bar app, install the cask:
         brew install --cask elkwaet/batalert/batalert
 
-      First-time setup :
+      First-time setup:
         batalert --setup
 
-      To start the app :
+      To start the app:
         open /Applications/BatAlert.app
     EOS
   end
 
   test do
-    # Vérifie que la commande s'exécute et retourne la bonne version
     assert_match "BatAlert #{version}", shell_output("#{bin}/batalert --version")
   end
 end
