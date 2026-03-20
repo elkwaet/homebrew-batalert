@@ -18,7 +18,7 @@ class BatalertCli < Formula
   # SHA256 stable — ce fichier ne change jamais une fois uploadé
   version "1.3.0"
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v1.3.0/downloads/BatAlert-1.3.0.zip"
-  sha256 "e1d6dec0d7334934a1c9797bf1f4266afd42aeebeae79a225bb353ce63eabae1"
+  sha256 "688ee8ca2a68fa7c637b667d2d3660a243ffda5235de5cfea25fc4dbdb534060"
   license "MIT"
 
   depends_on "python@3.12"
@@ -30,7 +30,7 @@ class BatalertCli < Formula
 
   resource "psutil" do
     url "https://files.pythonhosted.org/packages/source/p/psutil/psutil-5.9.8.tar.gz"
-    sha256 "0746f5f8d406af344fd547f1c8daa5f5c33dbc293bb8d6a16d80b4bb88f59372"
+    sha256 "6be126e3225486dff286a8fb9a06246a5253f4c7c53b475ea5f5ac934e64194c"
   end
 
   def install
