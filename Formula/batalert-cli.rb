@@ -56,10 +56,11 @@ class BatalertCli < Formula
            "--upgrade", "pip"
     system venv/"bin/pip", "install", "--quiet", "rumps", "psutil"
 
-    # Extraire les scripts Python depuis BatAlert.app/Contents/Resources/
-    app_resources = Pathname.pwd/"BatAlert.app/Contents/Resources"
-    libexec.install app_resources/"batalert.py"
-    libexec.install app_resources/"i18n.py"
+    # Extraire les scripts Python depuis le zip
+    # Le zip contient : BatAlert.app/Contents/Resources/batalert.py
+    resources_path = buildpath/"BatAlert.app/Contents/Resources"
+    libexec.install resources_path/"batalert.py"
+    libexec.install resources_path/"i18n.py"
 
     # Wrapper shell
     (bin/"batalert").write <<~SH
