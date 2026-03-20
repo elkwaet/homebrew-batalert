@@ -9,7 +9,7 @@
 
 cask "batalert" do
   version "1.3.0"
-  sha256 "688ee8ca2a68fa7c637b667d2d3660a243ffda5235de5cfea25fc4dbdb534060"
+  sha256 "98f6e724003d874bc7f020cb58f9676406aa5a5d6ad05f4fead6c6e8412a94fc"
 
   # Pointe sur le .app précompilé uploadé comme asset de la release GitLab
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v#{version}/downloads/BatAlert-#{version}.zip"
