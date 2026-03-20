@@ -3,9 +3,9 @@ class BatalertCli < Formula
 
   desc "CLI configuration tool for BatAlert — lightweight macOS battery monitor"
   homepage "https://gitlab.com/elkwaet/battery-alert-macos"
-  version "1.3.1"
-  url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v1.3.1/downloads/BatAlert-1.3.1.zip"
-  sha256 "c04c0552c8a575516fa2debb3fd30d87a2ad83479adea8e379cc65b204604bbd"
+  version "1.4.0"
+  url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v1.4.0/downloads/BatAlert-1.4.0.zip"
+  sha256 "73a6af00ca1abee6abe337e1bffcc6031846d7a9f76216aae05f52a1f68828e8"
   license "MIT"
 
   depends_on "python@3.12"
