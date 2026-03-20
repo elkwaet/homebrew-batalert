@@ -31,7 +31,7 @@ class BatalertCli < Formula
 
     # buildpath = /private/tmp/batalert-cli-xxx/
     # Le zip extrait y place BatAlert.app/
-    resources_path = buildpath/"BatAlert.app/Contents/Resources"
+    resources_path = buildpath/"Contents/Resources"
     libexec.install resources_path/"batalert.py"
     libexec.install resources_path/"i18n.py"
 
