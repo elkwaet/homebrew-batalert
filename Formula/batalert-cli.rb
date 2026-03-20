@@ -47,6 +47,7 @@ class BatalertCli < Formula
 
     # Installer batalert.py dans libexec
     libexec.install "batalert.py"
+    libexec.install "i18n.py"
 
     # Créer le wrapper shell qui utilise le venv Python
     (bin/"batalert").write <<~SH
