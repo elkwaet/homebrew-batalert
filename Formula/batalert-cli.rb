@@ -16,9 +16,9 @@ class BatalertCli < Formula
 
   # Pointe sur le zip statique uploadé comme asset de release GitLab
   # SHA256 stable — ce fichier ne change jamais une fois uploadé
-  version "1.3.0"
-  url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v1.3.0/downloads/BatAlert-1.3.0.zip"
-  sha256 "c04c0552c8a575516fa2debb3fd30d87a2ad83479adea8e379cc65b204604bbd"
+  version "1.3.1"
+  url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v1.3.1/downloads/BatAlert-1.3.1.zip"
+  sha256 "688ee8ca2a68fa7c637b667d2d3660a243ffda5235de5cfea25fc4dbdb534060"
   license "MIT"
 
   depends_on "python@3.12"
