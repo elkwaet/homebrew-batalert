@@ -8,8 +8,8 @@
 #   brew uninstall --cask batalert
 
 cask "batalert" do
-  version "1.6.0"
-  sha256 "78a425332dfb389f0d6bd41f222a97815187387c4f48aa50f2534044e1365039"
+  version "1.6.1"
+  sha256 "fff4bf9a103ee416e3726e0365d17156a8682d972cf467c897e71697395eaf4f"
 
   # Pointe sur le .app précompilé uploadé comme asset de la release GitLab
   url "https://gitlab.com/elkwaet/battery-alert-macos/-/releases/v#{version}/downloads/BatAlert-#{version}.zip"
