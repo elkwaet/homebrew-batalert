@@ -34,6 +34,9 @@ class BatalertCli < Formula
     resources_path = buildpath/"Contents/Resources"
     libexec.install resources_path/"batalert.py"
     libexec.install resources_path/"i18n.py"
+    # Module de configuration introduit en 1.6.0 : absent du ZIP 1.5.x
+    config_module = resources_path/"batalert_config.py"
+    libexec.install config_module if config_module.exist?
 
     (bin/"batalert").write <<~SH
       #!/bin/bash
