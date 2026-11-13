@@ -1,7 +1,7 @@
 # homebrew-batalert/Casks/batalert.rb
 #
 # Installation :
-#   brew tap elkwaet/batalert https://gitlab.com/elkwaet/homebrew-batalert.git
+#   brew tap elkwaet/batalert
 #   brew install --cask elkwaet/batalert/batalert
 #
 # Désinstallation :

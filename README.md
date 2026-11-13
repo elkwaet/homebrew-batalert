@@ -1,6 +1,6 @@
 # homebrew-batalert
 
-> Homebrew Tap for [BatAlert](https://gitlab.com/elkwaet/battery-alert-macos) — lightweight macOS battery monitor.
+> Homebrew Tap for [BatAlert](https://gitlab.com/elkwaet/battery-alert-macos) — lightweight macOS battery monitor. Reference tap: [GitHub `elkwaet/homebrew-batalert`](https://github.com/elkwaet/homebrew-batalert) (GitLab mirror kept).
 
 ## Install
 
@@ -13,7 +13,7 @@ brew tap elkwaet/batalert
 brew install --cask elkwaet/batalert/batalert
 
 # CLI configuration tool → batalert command
-brew install elkwaet/batalert/batalert
+brew install elkwaet/batalert/batalert-cli
 ```
 
 ### First-time setup
